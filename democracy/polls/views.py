@@ -64,7 +64,7 @@ class ChoiceViewSet(viewsets.ModelViewSet) :
 
     def retrieve(self, request, pk=None):
         queryset = Choice.objects.all()
-        queryset = queryset.filter(target_uuid=pk)
+        queryset = queryset.filter(uuid=pk)
         if not queryset:
             queryset = Choice.objects.none()
 
@@ -78,3 +78,18 @@ class ChoiceViewSet(viewsets.ModelViewSet) :
             choice.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, pk=None):
+        queryset = Choice.objects.all()
+        queryset = queryset.filter(uuid=pk)
+
+        if len(queryset) != 1:
+            queryset = Choice.objects.none()
+            serializer = ChoiceSerializer(queryset, many=True)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        choice = queryset[0] 
+        choice.votes += 1
+        choice.save() 
+        
+        return Response(status=status.HTTP_200_OK)
