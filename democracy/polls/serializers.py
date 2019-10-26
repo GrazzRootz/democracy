@@ -22,7 +22,7 @@ class ChoiceSerializer(serializers.ModelSerializer):
         return Choice(**validated_data)
 
 class PollSerializer(serializers.ModelSerializer):
-    choices = ChoiceSerializer()
+    choices = ChoiceSerializer(many=True, read_only=True)
 
     class Meta:
         model = Question

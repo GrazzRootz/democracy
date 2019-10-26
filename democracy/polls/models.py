@@ -19,7 +19,7 @@ class Question(models.Model):
 
 class Choice(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    question = models.ForeignKey('Question', on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, related_name='choices', on_delete=models.CASCADE)
     choice_text = models.TextField(max_length=200)
     votes = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)

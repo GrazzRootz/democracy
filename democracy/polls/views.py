@@ -25,13 +25,6 @@ class PollsViewSet(viewsets.ModelViewSet) :
         
         serializer = PollSerializer(queryset, many=True)
         return Response(serializer.data)
-    
-    def create(self, request):
-        raise NotImplementedError("YOU CANNOT MAKE QUESTIONS YET!!! >:-| ")
-        # serializer = CommentSerializer(data=request.data)
-        # if serializer.is_valid():
-        #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class QuestionViewSet(viewsets.ModelViewSet) :
     """A viewset for getting a list of all polls, but just their titles, not 
