@@ -16,6 +16,9 @@ class CommentsViewSet(viewsets.ModelViewSet) :
 
     def retrieve(self, request, pk=None):
         queryset = Comment.objects.all()
-        user = get_object_or_404(queryset, target_uuid=pk)
-        serializer = CommentSerializer(user)
+        queryset = queryset.filter(target_uuid=pk)
+        if not queryset:
+            queryset = Comment.objects.none()
+        
+        serializer = CommentSerializer(queryset, many=True)
         return Response(serializer.data)
