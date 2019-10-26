@@ -8,7 +8,7 @@ from .serializers import CommentSerializer
 class CommentsViewSet(viewsets.ModelViewSet) :
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
-    
+
     def list(self, request, *args, **kwargs):
         queryset = Comment.objects.all()
         serializer = CommentSerializer(Comment.objects.all(), many=True)
@@ -16,6 +16,6 @@ class CommentsViewSet(viewsets.ModelViewSet) :
 
     def retrieve(self, request, pk=None):
         queryset = Comment.objects.all()
-        user = get_object_or_404(queryset, pk=pk)
+        user = get_object_or_404(queryset, target_uuid=pk)
         serializer = CommentSerializer(user)
         return Response(serializer.data)

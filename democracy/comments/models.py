@@ -3,6 +3,8 @@ from django.db import models
 # Create your models here.
 class Comment(models.Model):
     uuid = models.CharField(max_length=100)
+    parent_uuid = models.CharField(max_length=100, default='0000000',)
+
     # Target is the UUID of the thing that this comment applies to 
     target_uuid = models.CharField(max_length=100)
     content = models.TextField(max_length=100)
