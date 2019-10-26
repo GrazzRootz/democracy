@@ -1,19 +1,21 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework.views import APIView
+from rest_framework import viewsets
+from rest_framework.response import Response
 from .models import Comment
+from .serializers import CommentSerializer 
 
+class CommentsViewSet(viewsets.ModelViewSet) :
+    serializer_class = CommentSerializer
+    queryset = Comment.objects.all()
+    
+    def list(self, request, *args, **kwargs):
+        queryset = Comment.objects.all()
+        serializer = CommentSerializer(Comment.objects.all(), many=True)
+        return Response(serializer.data)
 
-class ListComments(APIView):
-    """
-    View to list all comments in the system.
-
-    * Requires jwt authentication.
-    """
-
-    def get(self, request, format=None):
-        """
-        Return a list of all users.
-        """
-        # comments = [user.username for user in User.objects.all()]
-        comments = Comment.objects.all()
-        return Response(comments)
+    def retrieve(self, request, pk=None):
+        queryset = Comment.objects.all()
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = CommentSerializer(user)
+        return Response(serializer.data)

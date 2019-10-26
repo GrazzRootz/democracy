@@ -17,13 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from . import views
-from comments.views import ListComments
+from comments.views import CommentsViewSet
 
 router = routers.DefaultRouter()
-router.register('comments', ListComments)
+router.register('comments', CommentsViewSet, basename='Comment')
+urlpatterns = router.urls
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include(router.urls)),
-]
+# urlpatterns = [
+#     path('admin/', admin.site.urls),
+#     path('', include(router.urls)),
+# ]
 
