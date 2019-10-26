@@ -18,9 +18,13 @@ from django.urls import path, include
 from rest_framework import routers
 from . import views
 from comments.views import CommentsViewSet
+from polls.views import PollsViewSet, QuestionViewSet, ChoiceViewSet
 
 router = routers.DefaultRouter()
 router.register('comments', CommentsViewSet, basename='Comment')
+router.register('questions', QuestionViewSet, basename='Questions')
+router.register('polls', PollsViewSet, basename='Polls')
+router.register('choices', ChoiceViewSet, basename='Choices')
 urlpatterns = router.urls
 
 urlpatterns += [
