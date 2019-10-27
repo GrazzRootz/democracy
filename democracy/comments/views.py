@@ -27,5 +27,7 @@ class CommentsViewSet(viewsets.ModelViewSet) :
     def create(self, request):
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
+            comment = serializer.save()
+            comment.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
